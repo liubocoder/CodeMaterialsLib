@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="80dp"
+              android:orientation="vertical"
+              android:background="#808080"
+              android:gravity="center"
+              android:tag=""
+              android:layout_height="110dp">
+
+    <ImageView
+            android:id="@+id/iv_list_ic"
+            android:padding="2dp"
+            tools:src="#FF0000"
+            android:layout_width="64dp"
+            android:layout_height="64dp"/>
+
+    <TextView
+            android:id="@+id/tv_list_txt"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            tools:text="谷歌服务"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            android:lines="2"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>
