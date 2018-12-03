@@ -3,9 +3,10 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="80dp"
               android:orientation="vertical"
-              android:background="#808080"
+              tools:background="#808080"
               android:gravity="center"
-              android:tag=""
+              android:background="@drawable/sel_white_alpha_pressed"
+              android:tag="com.lb.launcher.list.ListIcTvData$ListIcTvHolder"
               android:layout_height="110dp">
 
     <ImageView
@@ -21,8 +22,9 @@
             android:gravity="center_horizontal"
             tools:text="谷歌服务"
             android:layout_marginTop="2dp"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:lines="2"
+            android:textColor="#EFFFFFFF"
             android:layout_height="wrap_content"/>
 
 </LinearLayout>
