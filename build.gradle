@@ -29,7 +29,7 @@ task clean(type: Delete) {
 // 没执行成功  估计是环境问题
 task installLocalApk() {
     //具体需要apk路径
-    def path = "E:\\Android\\remote_compile_output\\laucher-debug.apk"
+    def path = "E:\\Android\\remote_compile_output\\laucherdemo-debug.apk"
 
     //adb install 命令
     def command = "adb install -r ${path}"

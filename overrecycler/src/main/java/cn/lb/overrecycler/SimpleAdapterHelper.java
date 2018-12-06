@@ -14,4 +14,8 @@ public final class SimpleAdapterHelper {
     public static BaseRecyclerAdapter recyclerAdapter() {
         return new BaseRecyclerAdapter(new SimpleHolderFactory());
     }
+
+    public static SimpleLoopAdapter loopAdapter() {
+        return new SimpleLoopAdapter(new SimpleHolderFactory());
+    }
 }

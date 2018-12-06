@@ -11,6 +11,8 @@ import java.util.List;
 
 import cn.lb.overrecycler.impl.IAdapterNotifyDataChangeListener;
 
+import static android.support.v7.widget.RecyclerView.NO_ID;
+
 /**
  * 通用的RecyclerView Adapter，为BaseHolder提供onBindView()、onUnbindView()等;
  * 为BaseHolderData提供updateData()、getItemSpanSize()等
@@ -18,14 +20,18 @@ import cn.lb.overrecycler.impl.IAdapterNotifyDataChangeListener;
  * Created by LiuBo on 2016-08-04.
  */
 public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
-    private static final String TAG = "BaseRecyclerAdapter";
-    protected BaseHolderFactory mHolderFactory;
-    protected List<BaseHolderData> mDatas = new ArrayList<>();
+    private BaseHolderFactory mHolderFactory;
     private IAdapterNotifyDataChangeListener mDataChangeListener;
     private RecyclerView mRecyclerView;
+    private List<? extends BaseHolderData> mBackupListData;
+    private int mScrollState = RecyclerView.SCROLL_STATE_IDLE;
+    private boolean mRefreshEnable = true;
+
+    protected List<BaseHolderData> mDatas = new ArrayList<>();
 
     public BaseRecyclerAdapter(@NonNull BaseHolderFactory factory) {
         mHolderFactory = factory;
+        setHasStableIds(true);
     }
 
     /**
@@ -41,8 +47,12 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
      * 仅更新数据，未刷新ui
      */
     public void updateData(@NonNull List<? extends BaseHolderData> datas) {
-        this.mDatas.clear();
-        this.mDatas.addAll(datas);
+        if (isIdleScrollState() && isRefreshEnable()) {
+            this.mDatas.clear();
+            this.mDatas.addAll(datas);
+        } else {
+            mBackupListData = new ArrayList<>(datas);
+        }
     }
 
     /**
@@ -50,13 +60,22 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
      * @see #updateData(List)
      */
     public void updateAndNotifyData(@NonNull List<? extends BaseHolderData> datas) {
-        updateData(datas);
-        notifyDataSetChanged();
-        if (mDataChangeListener != null) {
-            mDataChangeListener.onDataChanged(this);
+        if (isIdleScrollState() && isRefreshEnable()) {
+            updateData(datas);
+            notifyDataSetChanged();
+            if (mDataChangeListener != null) {
+                mDataChangeListener.onDataChanged(this);
+            }
+        } else {
+            mBackupListData = new ArrayList<>(datas);
         }
     }
 
+    /**
+     * 比较数据 找到第一个不相同的item项 进行刷新
+     * 强制刷新，会清除缓存
+     * @param datas 待更新数据
+     */
     public void updateRange(@NonNull List<? extends BaseHolderData> datas) {
         int firstDiffIdx = -1;
         List<BaseHolderData> list = new ArrayList<>(mDatas);
@@ -70,11 +89,14 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
         if (firstDiffIdx <= 0) {
             updateAndNotifyData(datas);
         } else {
+            mScrollState = RecyclerView.SCROLL_STATE_IDLE;
+            mBackupListData = null;
             updateData(datas);
 
             int offsetOrc = list.size() - firstDiffIdx;
             int offsetDest = datas.size() - firstDiffIdx;
             int minOffset = Math.min(offsetOrc, offsetDest);
+
             notifyItemRangeChanged(firstDiffIdx, minOffset);
             if (offsetOrc > offsetDest) {
                 notifyItemRangeRemoved(datas.size(), list.size());
@@ -84,11 +106,9 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
         }
     }
 
-    public void myNotifyItemRemoved(int pos) {
-        if (pos >= 0 && pos < mDatas.size()) {
-            mDatas.remove(pos);
-            notifyItemRemoved(pos);
-        }
+    @Override
+    public long getItemId(int position) {
+        return hasStableIds() ? position : NO_ID;
     }
 
     @Override
@@ -106,17 +126,16 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onBindViewHolder(BaseHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseHolder holder, int position) {
         holder.onBindView(getItemData(position), position);
     }
 
     @Override
-    public void onViewRecycled(BaseHolder holder) {
+    public void onViewRecycled(@NonNull BaseHolder holder) {
         super.onViewRecycled(holder);
         if (holder.mBindState) {
             holder.onUnbindView();
         }
-        Log.d(TAG, "onViewRecycled: "+holder);
     }
 
     @Override
@@ -125,14 +144,22 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+        if (mRecyclerView != null) {
+            mRecyclerView.removeOnScrollListener(mScrollListener);
+        }
         mRecyclerView = recyclerView;
+        mRecyclerView.removeOnScrollListener(mScrollListener);
+        mRecyclerView.addOnScrollListener(mScrollListener);
     }
 
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
+        if (mRecyclerView != null) {
+            mRecyclerView.removeOnScrollListener(mScrollListener);
+        }
         mRecyclerView = null;
     }
 
@@ -169,4 +196,43 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseHolder> {
         }
         return BaseHolderData.SF_DEF_ITEM_SPAN;//default value
     }
+
+    /**
+     * 当前是否是idle状态
+     * @return true 是
+     */
+    protected boolean isIdleScrollState() {
+        return mScrollState == RecyclerView.SCROLL_STATE_IDLE;
+    }
+
+    /**
+     * 设置当前的滚动状态 可以是当前RecyclerView 或者子RecyclerView来设置
+     */
+    protected void setScrollState(int state) {
+        mScrollState = state;
+    }
+
+    /**
+     * 设置是否可以刷新，默认true
+     * @param enable true 可刷新 false 不能刷新
+     */
+    public void setRefreshEnable(boolean enable) {
+        mRefreshEnable = enable;
+    }
+
+    public boolean isRefreshEnable() {
+        return mRefreshEnable;
+    }
+
+    private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            mScrollState = newState;
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && mBackupListData != null) {
+                updateAndNotifyData(mBackupListData);
+                mBackupListData = null;
+            }
+        }
+    };
 }

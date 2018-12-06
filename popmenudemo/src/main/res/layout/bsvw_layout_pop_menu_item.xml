@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bsvw_pop_menu_item_height"
+    android:orientation="horizontal"
+    android:tag="com.lb.popmenu.PopMenuData$PopMenuHolder">
+
+    <ImageView
+        android:id="@+id/bsvw_tv_pop_menu_item_icon"
+        android:layout_width="@dimen/bsvw_pop_menu_icon_size"
+        android:layout_height="@dimen/bsvw_pop_menu_icon_size"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:scaleType="fitCenter"/>
+
+    <!-- @drawable/selector_pop_menu_item -->
+    <TextView
+        android:id="@+id/bsvw_tv_pop_menu_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:maxLines="2"
+        android:textColor="@color/comm_white" />
+
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--主题色-->
+    <color name="comm_main">#FF28AAE5</color>
+    <!--主题浅色-->
+    <color name="comm_main_light">#8828AAE5</color>
+    <!--主题色浅色 不带alpha-->
+    <color name="comm_main_light_no_alpha">#FF7BCBF0</color>
+    <!--主题深色-->
+    <color name="comm_main_dark">#FF2499CE</color>
+
+    <!--用于渐变主题色-->
+    <color name="comm_main_end">#FF4262e2</color>
+
+    <color name="comm_white_90">#E5FFFFFF</color>
+    <color name="comm_white_85">#D9FFFFFF</color>
+    <color name="comm_white_80">#CCFFFFFF</color>
+    <color name="comm_white_70">#B2FFFFFF</color>
+    <color name="comm_white_60">#99FFFFFF</color>
+    <color name="comm_white_50">#80FFFFFF</color>
+    <color name="comm_white_40">#66FFFFFF</color>
+    <color name="comm_white_30">#4CFFFFFF</color>
+    <color name="comm_white_20">#33FFFFFF</color>
+    <color name="comm_white_15">#26FFFFFF</color>
+    <color name="comm_white_10">#19FFFFFF</color>
+    <color name="comm_white_5">#0DFFFFFF</color>
+    <color name="comm_white">#FFFFFFFF</color>
+    <color name="comm_black">#FF000000</color>
+    <color name="comm_black_90">#E6000000</color>
+    <color name="comm_black_85">#D9000000</color>
+    <color name="comm_black_80">#CC000000</color>
+    <color name="comm_black_70">#B2000000</color>
+    <color name="comm_black_60">#99000000</color>
+    <color name="comm_black_50">#80000000</color>
+    <color name="comm_black_40">#66000000</color>
+    <color name="comm_black_30">#4D000000</color>
+    <color name="comm_black_20">#33000000</color>
+    <color name="comm_black_15">#26000000</color>
+    <color name="comm_black_10">#19000000</color>
+    <color name="comm_black_5">#0D000000</color>
+    <color name="comm_black_3">#08000000</color>
+    <color name="comm_transparent">#00FFFFFF</color>
+    <!--条目白色的背景-->
+    <color name="comm_item_white">@color/comm_white</color>
+    <color name="comm_item_white_p">#FFE6E6E6</color>
+    <!--条目黑色的背景-->
+    <color name="comm_item_black">#FF191919</color>
+    <!--条目黑色的背景-->
+    <color name="comm_item_black_p">#FF0D0D0D</color>
+    <!-- 可阅读文字灰色 -->
+    <color name="comm_read_gray">#808080</color>
+    <!-- 可阅读文字灰色 -->
+    <color name="comm_gray">#999999</color>
+    <!-- 可阅读文字灰色 -->
+    <color name="comm_grayer">#DDDDDD</color>
+    <!--更加淡雅的灰色-->
+    <color name="comm_grayest">#FFF2F2F2</color>
+
+    <!--通用绿色-->
+    <color name="comm_green">#56BC60</color>
+    <!--通用红色-->
+    <color name="comm_red">#FFFF3030</color>
+    <!--通用红色-->
+    <color name="comm_red_dark">#CCFF3030</color>
+    <!--通用黄色-->
+    <color name="comm_yellow">#FFFF00</color>
+    <color name="comm_yellow_light">#FFFFC500</color>
+    <!--玫红色-->
+    <color name="comm_rose_red">#FB8797</color>
+    <!--离线设备的颜色-->
+    <color name="comm_offline_color">#FFCCCCCC</color>
+    <!--报警设备的颜色-->
+    <color name="comm_alarm_color">@color/comm_red</color>
+    <!--升级设备的颜色-->
+    <color name="comm_upgrade_color">@color/comm_green</color>
+    <!--紫色-->
+    <color name="comm_purple">#A86BF7</color>
+    <color name="comm_week_set_stroke">#363636</color>
+    <color name="comm_week_set_bg">#212121</color>
+    <color name="comm_light_blue">#FF28EDFF</color>
+</resources>
