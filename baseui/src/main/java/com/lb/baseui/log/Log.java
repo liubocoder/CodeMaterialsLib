@@ -16,12 +16,12 @@ import static com.lb.baseui.log.LoggerConfig.*;
  * @date 2018-09-29
  */
 public final class Log {
-    public static final Logger SDK = new Logger("sdk");
-    public static final Logger Activity = new Logger("Actt");
-    public static final Logger View = new Logger("View");
+    public static final Logger ACTIVITY = new Logger("ACTT");
+    public static final Logger VIEW = new Logger("VIEW");
     public static final Logger HTTP = new Logger("HTTP");
     public static final Logger DB = new Logger("DB");
-    public static final Logger FILE = new Logger("File");
+    public static final Logger FILE = new Logger("FILE");
+    public static final Logger LIST = new Logger("LIST");
 
     private static StringBuilder sBuilder = new StringBuilder();
     private static int sLines = 0;

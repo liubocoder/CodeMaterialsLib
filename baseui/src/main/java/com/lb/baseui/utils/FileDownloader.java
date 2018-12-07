@@ -138,12 +138,16 @@ public class FileDownloader {
                 }
 
                 saveToDisk(buf, is, os);
-                md5Str = CryptUtil.encodeByMd5(taskFile);
-                if (!StringUtils.isEmpty(md5Str) && md5Str.equals(task.md5)) {
+                if (StringUtils.isEmpty(task.md5)) {
                     sendEvent(task, UtilEvent.COMM_FILE_DOWNLOAD_SUCCESS, tag);
                 } else {
-                    Log.FILE.e("digest md5 failed, url=%s, sMD5=%s, lMD5=%s",task.url,task.md5, md5Str);
-                    sendEvent(task, UtilEvent.COMM_FILE_DOWNLOAD_FAILED, tag);
+                    md5Str = CryptUtil.encodeByMd5(taskFile);
+                    if (StringUtils.isEmpty(md5Str) || !md5Str.equals(task.md5)) {
+                        Log.FILE.e("digest md5 failed, url=%s, sMD5=%s, lMD5=%s",task.url,task.md5, md5Str);
+                        sendEvent(task, UtilEvent.COMM_FILE_DOWNLOAD_FAILED, tag);
+                    } else {
+                        sendEvent(task, UtilEvent.COMM_FILE_DOWNLOAD_SUCCESS, tag);
+                    }
                 }
             }
 
