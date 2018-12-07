@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".DevActivity" />
 
         <activity
                 android:name="com.lb.deskshortcut.Shortcut1Activity"

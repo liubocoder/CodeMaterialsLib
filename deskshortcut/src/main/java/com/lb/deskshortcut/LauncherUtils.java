@@ -50,7 +50,6 @@ public class LauncherUtils {
             Intent shortcutBroadcast = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
             Intent shortcutIntent = new Intent(buildLauncherAction(context));
 
-            shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             bundle.putLong("TIME_STAMP", System.currentTimeMillis());
 
             shortcutIntent.putExtras(bundle);
