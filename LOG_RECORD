@@ -1,0 +1,22 @@
+
+基础模块介绍
+baseui：基础页面、控件、工具等
+overrecycler：通用RecyclerView
+
+
+功能模块：
+deskshortcut：
+桌面快捷方式的简单使用，  主要是点击快捷方式的页面启动流程，核心点是启动模式（launchMode）
+standard 默认模式
+singleTop 任务栈中顶部存在，则复用，不存在则创建
+singleTask 在所有任务栈中查找，如果存在复用 并clearTop，不存在则新创建。（区别是否指定taskAffinity标签，影响创建新实例的任务栈）
+singleInstance Activity和回退栈都是 单例模式
+
+launcherdemo：
+桌面应用demo
+
+popmenudemo：
+解决attachView隐藏或者remove导致低版本系统 PopupWindow移动到屏幕左上角问题
+
+tablayoutdemo
+测试使用tablayout

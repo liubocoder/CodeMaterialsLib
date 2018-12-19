@@ -27,6 +27,7 @@ task clean(type: Delete) {
 }
 
 // 没执行成功  估计是环境问题
+/*
 task installLocalApk() {
     //具体需要apk路径
     def path = "E:\\Android\\remote_compile_output\\laucherdemo-debug.apk"
@@ -45,4 +46,4 @@ task installLocalApk() {
     } catch (Exception e) {
         e.printStackTrace()
     }
-}
+}*/

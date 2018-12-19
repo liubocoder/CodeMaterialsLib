@@ -13,36 +13,36 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.Activity.d("sInstt"+savedInstanceState+", taskId=%d", getTaskId());
+        Log.ACTIVITY.d("sInstt"+savedInstanceState+", taskId=%d", getTaskId());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.Activity.d("onStart");
+        Log.ACTIVITY.d("onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.Activity.d("onResume");
+        Log.ACTIVITY.d("onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.Activity.d("onPause");
+        Log.ACTIVITY.d("onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.Activity.d("onStop");
+        Log.ACTIVITY.d("onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.Activity.d("onDestroy");
+        Log.ACTIVITY.d("onDestroy");
     }
 }
